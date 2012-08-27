@@ -25,11 +25,15 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 ---------------------------------------------------------------------------------------*/
 
-add_action('init', 'generate_event_json', 10);
+add_action('admin_enqueue_scripts', 'generate_event_json', 10); 
+//Run when in admin section to save precious query times
+
 
 function generate_event_json() {
 
-	if(class_exists('Event')) :
+
+	if(class_exists('Event')) : 
+	// Checks to see if Event-O-Matic is alive otherwise bail
 
 	$event_call = new Event();
 
@@ -37,9 +41,10 @@ function generate_event_json() {
 
 	$timeline = new stdClass;
 
-	$timeline->headline = 'Niche Content Marketing';
+	$timeline->headline = 'Event-O-Matic JSON Feed';
 	$timeline->type = 'default';
-	$timeline->text = 'Event system Callum created because he\'s awesome';
+	$timeline->text = 'Created to be used with the Timeline plugin <a href="http://timeline.verite.co/">here</a>';
+	//Timeline.js needs a splash screen for some reason, edit that info here
 
 	foreach($events as $event){
 
@@ -67,15 +72,24 @@ function generate_event_json() {
 		$response = new stdClass;
 		$response->timeline = $timeline;
 
+		//Stick all the events in the $response var in a nice formatted format
+
 	}
 
-	$fp = fopen('events.json', 'w');
+	$path = wp_upload_dir();
+
+	//Grab the uploads path
+
+	$fp = fopen($path['basedir'] . '/events.json', 'w');
 	fwrite($fp, json_encode($response));
 	fclose($fp);
 
+	//Write or Overwrite the file
+
 	endif;
 
-
 }
+
+//And were outta here....
 
 ?>
