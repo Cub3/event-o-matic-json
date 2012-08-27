@@ -7,7 +7,6 @@ Version: 1.0
 Author: Callum Silcock
 Author URI: http://webanyti.me
 Copyright (c) 2012 Callum Silcock (http://webanyti.me)
-This is a WordPress plugin (http://wordpress.org).
 
 This is a WordPress plugin (http://wordpress.org).
 
